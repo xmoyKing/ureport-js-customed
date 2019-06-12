@@ -4,9 +4,12 @@
 import DatabaseTree from '../tree/DatabaseTree.js';
 import SpringTree from '../tree/SpringTree.js';
 import BuildinTree from '../tree/BuildinTree.js';
+import JsonTree from '../tree/JsonTree.js';
+
 import DatasourceDialog from '../dialog/DatasourceDialog.js';
 import SpringDialog from '../dialog/SpringDialog.js';
 import BuildinDatasourceSelectDialog from '../dialog/BuildinDatasourceSelectDialog.js';
+import JsonDatasourceDialog from '../dialog/JsonDatasourceDialog.js';
 
 export default class DatasourcePanel{
     constructor(context){
@@ -67,6 +70,20 @@ export default class DatasourcePanel{
             });
         });
 
+        // 自定义json类型
+        const addJsonBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="JSON格式">
+            <i class="ureport ureport-sqlds"></i>
+        </button>`);
+        toolbar.append(addJsonBtn);
+        this.jsonDatasourceDialog=new JsonDatasourceDialog(this.datasources);
+        addJsonBtn.click(function(){
+            _this.jsonDatasourceDialog.show(function(name){
+                const ds={name};
+                const tree=new JsonTree(_this.treeContainer,_this.datasources,ds,_this.jsonDatasourceDialog,_this.context);
+                _this.datasources.push(tree);
+            });
+        });
+
         this.buildDatasources();
         return panel;
     }
@@ -80,6 +97,8 @@ export default class DatasourcePanel{
                 new SpringTree(this.treeContainer,this.datasources,ds,this.springDialog,this.context);
             }else if(ds.type==='buildin'){
                 new BuildinTree(this.treeContainer,this.datasources,ds,this.context);
+            }else if(ds.type==='json'){
+                new JsonTree(this.treeContainer,this.datasources,ds,this.jsonDatasourceDialog,this.context);
             }
         }
     }
