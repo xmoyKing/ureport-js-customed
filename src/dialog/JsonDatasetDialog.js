@@ -13,7 +13,10 @@ function form2JsonArr(form){
     keys.each((idx, item) => {
         let name = $(item).val();
         let value = $(values[idx]).val();
-        arr.push({ name, value })
+        // 当name存在时才加入
+        if(name){
+            arr.push({ name, value });
+        }
     });
     return arr;
 }
@@ -94,8 +97,8 @@ export default class JsonDatasetDialog{
         urlRow.append(this.urlEditor);
         body.append(urlRow);
 
-        const paramRow=$(`<div class="row" style="margin: 10px;"><span class="row-label">Param</span></div>`);
-        this.paramEditor=$(`<input type="text" placeholder="root/..." value="root"  class="form-control"  >`);
+        const paramRow=$(`<div class="row" style="margin: 10px;"><span class="row-label">Parameter</span></div>`);
+        this.paramEditor=$(`<input type="text" value="root"  class="form-control"  >`);
         paramRow.append(this.paramEditor);
         body.append(paramRow);
 
@@ -201,6 +204,7 @@ export default class JsonDatasetDialog{
             let headers = form2JsonArr(_this.headerEditor);
             let type =_this.jftypeEditor.val();
             let json =_this.jsonEditor.val();
+            let params = form2JsonArr(_this.formEditor);
 
             if(!(name && url)){
                 alert('请填写name、url')
@@ -223,16 +227,20 @@ export default class JsonDatasetDialog{
                 _this.dataset.headers = { headers }
             }
 
-            if(type == 'json'){
+            if(type == 'json' && json){
                 try { // 校验json格式
                     JSON.parse(json);
                 } catch (error) {
                     alert('内容JSON格式错误')
                 }
                 _this.dataset.body.json = json;
-            } else if(type == 'form'){
-                _this.dataset.body.params = form2JsonArr(_this.formEditor);
+            } else if(type == 'form' && params.length){
+                _this.dataset.body.params = params;
+            } else {
+                // 若json和params都没有，则删除body
+                delete _this.dataset.body;
             }
+
 
             console.log("_this.dataset:", _this.dataset);
             _this.dialog.modal('hide');
@@ -254,16 +262,18 @@ export default class JsonDatasetDialog{
             if(dataset.headers){
                 jsonArr2form(dataset.headers.headers, _this.headerEditor);
             }
-            _this.jftypeEditor.val(dataset.body.type);
-            // 解析body参数
-            if(dataset.body.type == 'json'){
-                _this.jsonEditor.val(dataset.body.json);
-                _this.jsonEditor.parent().show();
-                _this.formEditor.parent().hide();
-            }else if(dataset.body.type == 'form'){
-                jsonArr2form(dataset.body.params, _this.formEditor);
-                _this.formEditor.parent().show();
-                _this.jsonEditor.parent().hide();
+            if(dataset.body){
+                _this.jftypeEditor.val(dataset.body.type);
+                // 解析body参数
+                if(dataset.body.type == 'json'){
+                    _this.jsonEditor.val(dataset.body.json);
+                    _this.jsonEditor.parent().show();
+                    _this.formEditor.parent().hide();
+                }else if(dataset.body.type == 'form'){
+                    jsonArr2form(dataset.body.params, _this.formEditor);
+                    _this.formEditor.parent().show();
+                    _this.jsonEditor.parent().hide();
+                }
             }
 
         }

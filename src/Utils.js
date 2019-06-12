@@ -525,17 +525,19 @@ export function tableToXml(context) {
                 }
 
                 let jfStr = '';
-                if (oy.body.type == 'form' && oy.body.params) {
-                    jfStr = `
-                    <body type="form">
-                        ${oy.body.params.map(i => `<param name="${i.name}" value="${i.name}"/>`).join('')}
-                    </body>
-                    `
-                } else if (oy.body.type == 'json' && oy.body.json) {
-                    jfStr = `
-                    <body type="json">
-                        <json>${oy.body.json}</json>
-                    </body>	`
+                if(oy.body){
+                    if (oy.body.type == 'form' && oy.body.params.length) {
+                        jfStr = `
+                        <body type="form">
+                            ${oy.body.params.map(i => `<param name="${i.name}" value="${i.name}"/>`).join('')}
+                        </body>
+                        `
+                    } else if (oy.body.type == 'json' && oy.body.json) {
+                        jfStr = `
+                        <body type="json">
+                            <json>${oy.body.json}</json>
+                        </body>	`
+                    }
                 }
 
                 ds +=

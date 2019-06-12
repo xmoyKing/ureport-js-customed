@@ -72,7 +72,7 @@ export default class DatasourcePanel{
 
         // 自定义json类型
         const addJsonBtn=$(`<button class="btn btn-default" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 8px;" title="JSON格式">
-            <i class="ureport ureport-sqlds"></i>
+            <i class="ureport ureport-methodds"></i>
         </button>`);
         toolbar.append(addJsonBtn);
         this.jsonDatasourceDialog=new JsonDatasourceDialog(this.datasources);

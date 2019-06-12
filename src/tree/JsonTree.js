@@ -34,7 +34,7 @@ export default class DatabaseTree extends BaseTree{
         const rootSpan=$(`
             <span id="${this.id}">
                 <i class='ureport ureport-minus' style='margin-right:2px'></i>
-                <i class="ureport ureport-sqlds"></i> <a href='###' class="ds_name">${this.name}</a>
+                <i class="ureport ureport-methodds"></i> <a href='###' class="ds_name">${this.name}</a>
             </span>`);
         this.datasourceLi.append(rootSpan);
         this.ul.append(this.datasourceLi);
@@ -129,7 +129,7 @@ export default class DatabaseTree extends BaseTree{
                 "add": {name:`${window.i18n.tree.addField}`, icon: "add"},
                 "edit": {name: `${window.i18n.tree.edit}`, icon: "edit"},
                 "delete": {name: `${window.i18n.tree.del}`, icon: "delete"},
-                "refresh": {name: `${window.i18n.tree.refresh}`,icon:'loading'}
+                // "refresh": {name: `${window.i18n.tree.refresh}`,icon:'loading'}
             }
         });
         return fieldsUL;
