@@ -3,6 +3,7 @@
  */
 import Context from './Context.js';
 import ReportTable from './table/ReportTable.js';
+import NewTool from './tools/NewTool.js';
 import SaveTool from './tools/SaveTool.js';
 import OpenTool from './tools/OpenTool.js';
 import AlignLeftTool from './tools/AlignLeftTool.js';
@@ -119,6 +120,7 @@ export default class UReportDesigner{
         const toolbar=$(`<div class="btn-group ud-toolbar top-toolbar"></div>`);
         this.container.prepend(toolbar);
         this.tools=[];
+        this.tools.push(new NewTool(context));
         this.tools.push(new PreviewTool(context));
         this.tools.push(new SaveTool(context));
         this.tools.push(new OpenTool(context));
