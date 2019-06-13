@@ -98,7 +98,7 @@ export default class JsonDatasetDialog{
         body.append(urlRow);
 
         const paramRow=$(`<div class="row" style="margin: 10px;"><span class="row-label">Parameter</span></div>`);
-        this.paramEditor=$(`<input type="text" value="root"  class="form-control"  >`);
+        this.paramEditor=$(`<input type="text" class="form-control"  >`);
         paramRow.append(this.paramEditor);
         body.append(paramRow);
 
