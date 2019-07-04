@@ -11,8 +11,9 @@ export default class OpenTool extends Tool{
     }
     execute(){
         // this.openDialog.show()
+        location.pathname.split('/')[1]
         // 新建一个窗口
-        window.open('/ureportwar/ureport/designer');
+        window.open(`/${location.pathname.split('/')[1]}/ureport/designer`);
     }
     getTitle(){
         return `新建`;
