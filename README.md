@@ -8,3 +8,9 @@ UReport-前端部分-修改版
 2. 添加的json类型数据源未完成i18n多语种功能，具体功能见DatasourcePanel.js
 3. 修改了webpack配置中drop_commit
 4. 修改了table2xml内数据源部分
+
+# webpack打包流程：
+1. ```npm install webpack -g```
+2. ```npm run build```
+
+打包之后的文件在ureport-asserts中

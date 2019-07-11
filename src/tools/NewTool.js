@@ -11,9 +11,12 @@ export default class OpenTool extends Tool{
     }
     execute(){
         // this.openDialog.show()
-        location.pathname.split('/')[1]
-        // 新建一个窗口
-        window.open(`/${location.pathname.split('/')[1]}/ureport/designer`);
+        // location.pathname.split('/')[1]
+        // 新建一个窗口，
+        // window.open(`/${location.pathname.split('/')[1]}/ureport/designer`);
+        
+        // 目前新建按钮仅在designer页面存在，所以采用相对路径即可。
+        window.open('./designer');
     }
     getTitle(){
         return `新建`;
